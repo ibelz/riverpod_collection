@@ -1,4 +1,4 @@
-# riverpod_collection
+# Riverpod Collection
 Collection with (smaller) examples and useful code snippets for Riverpod (Flutter)
 
 ## Disable When Running
@@ -9,5 +9,6 @@ Persists the state with shared prefs
 
 ## Infinite Scroll 
 Riverpod Sample by Rémi Rousselet
+
 see https://www.youtube.com/watch?v=BJtQ0dfI-RA
 
