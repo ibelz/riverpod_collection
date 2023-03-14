@@ -15,6 +15,11 @@ void main() {
   );
 }
 
+// extension for possibility 2 (by RandalSchwartz via Discord)
+extension ProviderIsLoading<T, AVT extends AsyncValue<T>> on WidgetRef {
+  bool isLoading(ProviderListenable<AVT> provider) => watch(provider.select((AVT s) => s.isLoading));
+}
+
 @riverpod
 class Counter extends _$Counter {
   @override
@@ -25,7 +30,7 @@ class Counter extends _$Counter {
   Future<void> increment() async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       return state.requireValue + 1;
     });
   }
@@ -37,6 +42,8 @@ class HomeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final counter = ref.watch(counterProvider);
+
+    //possibility 1:
     final incrementIsLoading = ref.watch(counterProvider.select((p) => p.isLoading));
 
     return Scaffold(
@@ -58,7 +65,8 @@ class HomeView extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: incrementIsLoading ? Colors.grey : Colors.blue,
-        onPressed: incrementIsLoading ? null : () => ref.read(counterProvider.notifier).increment(),
+        // possibility 2: with extension
+        onPressed: ref.isLoading(counterProvider) ? null : () => ref.read(counterProvider.notifier).increment(),
         child: const Icon(
           Icons.add,
         ),
