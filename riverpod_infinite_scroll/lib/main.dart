@@ -48,6 +48,7 @@ class MyApp extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Infinite Scroll Sample'),
         actions: [
+          //todo: how to refresh the listview completely (with empty list)?
           IconButton(
             onPressed: () => ref.invalidate(fetchItemsProvider),
             icon: const Icon(Icons.refresh),
